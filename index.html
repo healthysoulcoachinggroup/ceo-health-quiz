@@ -718,7 +718,7 @@
         // ─────────────────────────────────────────────────────
         // ⚙️  CONFIGURATION — fill these in before going live
         // ─────────────────────────────────────────────────────
-        const GHL_WEBHOOK_URL = 'YOUR_GHL_WEBHOOK_URL_HERE';
+        const FORMSPREE_URL = 'https://formspree.io/f/xeewedgj';
         const BOOKING_URL     = 'YOUR_BOOKING_LINK_HERE';
 
         // ─────────────────────────────────────────────────────
@@ -1063,30 +1063,27 @@
         }
 
         // ─────────────────────────────────────────────────────
-        // GHL WEBHOOK
+        // FORMSPREE SUBMISSION
         // ─────────────────────────────────────────────────────
         function sendToGHL(capacity, resultType, physical, mental, systematic) {
-            if (!GHL_WEBHOOK_URL || GHL_WEBHOOK_URL === 'YOUR_GHL_WEBHOOK_URL_HERE') return;
-
             const payload = {
-                source:                  'CEO Health Quiz',
-                name:                    contactInfo.name,
-                email:                   contactInfo.email,
-                phone:                   contactInfo.phone,
-                energy_capacity_score:   capacity,
-                result_type:             resultType,
-                physical_leak_count:     physical,
-                mental_leak_count:       mental,
-                systematic_leak_count:   systematic,
-                physical_symptoms:       (answers.q1 || []).map(i => questions[0].options[i]),
-                mental_symptoms:         (answers.q2 || []).map(i => questions[1].options[i]),
-                business_symptoms:       (answers.q3 || []).map(i => questions[2].options[i]),
-                timeline:                answers.q4 !== undefined ? questions[3].options[answers.q4] : null,
-                history:                 answers.q5 !== undefined ? questions[4].options[answers.q5] : null,
-                vision:                  (answers.q6 || []).map(i => questions[5].options[i])
+                'Name':             contactInfo.name,
+                'Email':            contactInfo.email,
+                'Phone':            contactInfo.phone,
+                'Energy Score':     capacity + '%',
+                'Profile Type':     resultType,
+                'Physical Leaks':   physical + ' / 6',
+                'Mental Leaks':     mental + ' / 5',
+                'Business Leaks':   systematic + ' / 5',
+                'Physical Symptoms':  (answers.q1 || []).map(i => questions[0].options[i]).join(', ') || 'None',
+                'Mental Symptoms':    (answers.q2 || []).map(i => questions[1].options[i]).join(', ') || 'None',
+                'Business Symptoms':  (answers.q3 || []).map(i => questions[2].options[i]).join(', ') || 'None',
+                'How Long':           answers.q4 !== undefined ? questions[3].options[answers.q4] : '—',
+                'What They\'ve Tried': answers.q5 !== undefined ? questions[4].options[answers.q5] : '—',
+                'Vision':             (answers.q6 || []).map(i => questions[5].options[i]).join(', ') || 'None'
             };
 
-            fetch(GHL_WEBHOOK_URL, {
+            fetch(FORMSPREE_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
