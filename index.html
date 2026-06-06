@@ -824,17 +824,17 @@
         // ─────────────────────────────────────────────────────
         const resultTypes = [
             {
-                min: 60,
+                min: 70,
                 type: 'Almost Regulated',
                 description: "You're closer than you think — but there are gaps in your foundation that keep things from fully sticking. For coaches, consultants, and service providers scaling their offers, small leaks become expensive problems. Without reinforcing the foundation now, the next season of growth will push you back into depletion."
             },
             {
-                min: 35,
+                min: 45,
                 type: 'Hitting the Ceiling',
                 description: "Your body and your business are sending the same signal. You've hit the limit of what willpower and pushing through can carry. As a coach, consultant, or service provider, your energy IS your offer — and until you address the root causes, the gap between your vision and your revenue will keep widening."
             },
             {
-                min: 15,
+                min: 25,
                 type: 'Functional Burnout',
                 description: "From the outside, you're still performing — showing up for clients, delivering results, running the business. On the inside, the tank is almost empty. High output, critically low reserves — this is the most dangerous zone for coaches and service providers because it doesn't look like burnout until it breaks. The longer this continues, the harder and longer the recovery."
             },
@@ -1085,7 +1085,7 @@
 
             fetch(FORMSPREE_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify(payload)
             }).catch(() => {});
         }
